@@ -6,7 +6,8 @@ import { Http2Server } from 'http2';
 import twilio from 'twilio';
 
 import smsValidator from './middleware/smsValidator';
-const fileURL = 'db/user.json';
+import userValidation from './middleware/userValidation';
+import handleConfirmAgreement from './handlers/handleConfirmAgreement';
 
 export default (): { app: Application; server: Http2Server } => {
   const app = express();
@@ -37,51 +38,26 @@ export default (): { app: Application; server: Http2Server } => {
    * ===================================================
    * ++++++++++++++++++++++ API ++++++++++++++++++++++++
    * ===================================================
-   * smsValidator we check the sms body format first
+   * 
+   * 
+   * calling smsValidator we check the sms body format first
    */
-  app.post('/sms', smsValidator, (req, res) => {
+  app.post('/sms', smsValidator, userValidation, (req, res) => {
     const MessagingResponse = twilio.twiml.MessagingResponse;
     const twiml = new MessagingResponse();
 
     const msgBody = req.body.Body;
     console.log('message received', msgBody);
-    const rawFileData = fs.readFileSync(fileURL);
-    const parsedUserData = JSON.parse(rawFileData);
-    const msgBody = req.body.Body;
 
-    const parsedMessage = msgBody.split('#');
-    const phoneNumber = parsedMessage[1];
-    /**
-     * Start multiple background processing here
-     */
-    const userRequestData = parsedUserData.find(data => data.phone_number === phoneNumber);
-
-    if (userRequestData) {
-      const isUserTopUpSMSActivated = userRequestData.is_top_up_sms_activated;
-      const isOvoActivated = userRequestData.is_ovo_activated;
-
-      if (isUserTopUpSMSActivated && isOvoActivated) {
-        /**
-         * SUCCESS
-         * If everything is good we will send this success message to user
-         */
-        twiml.message('Tokopedia - Isi ulang pulsa kamu BERHASIL untuk SN: 321321321321 senilai 50000');
-      }
-      /**
-       * If any of the conditions above are not achieved, then we will notify the user on the reasons
-       */
-      else if (!isUserTopUpSMSActivated) {
-        twiml.message('Tokopedia - Top up SMS anda belum teraktivasi');
-      }
-      else if (!isOvoActivated) {
-        twiml.message('Tokopedia - OVO anda belum teraktivasi');
-      }
-    } else {
-      twiml.message('Tokopedia - Nomor telepon belum terdaftar');
-    }
+    twiml.message('Tokopedia - Isi ulang pulsa kamu BERHASIL untuk SN: 321321321321 senilai 50000');
 
     res.writeHead(200, { 'Content-Type': 'text/xml' });
     res.end(twiml.toString());
+  });
+
+  app.post('/agreement', async (req, res) => {
+    const reqBody = req.body;
+    res.json(await handleConfirmAgreement(reqBody));
   });
 
   const server = http.createServer(app);
