@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "email": "williamcandra56@gmail.com",
+        "phone_number": "085357929649",
+        "is_top_up_sms_activated": true,
+        "is_ovo_activated": true
+    },
+    {
+        "id": 2,
+        "email": "budi123@gmail.com",
+        "phone_number": "081234",
+        "is_top_up_sms_activated": false,
+        "is_ovo_activated": true
+    },
+    {
+        "id": 3,
+        "email": "kevin123@gmail.com",
+        "phone_number": "084567",
+        "is_top_up_sms_activated": true,
+        "is_ovo_activated": false
+    },
+    {
+        "id": 4,
+        "email": "charlie495@gmail.com",
+        "phone_number": "081235813",
+        "is_top_up_sms_activated": false,
+        "is_ovo_activated": false
+    }
+]
