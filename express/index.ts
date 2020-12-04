@@ -4,6 +4,8 @@ import bodyParser from 'body-parser';
 import { Http2Server } from 'http2';
 import twilio from 'twilio';
 
+import smsValidator from './middleware/smsValidator';
+
 export default (): { app: Application; server: Http2Server } => {
   const app = express();
 
@@ -33,13 +35,13 @@ export default (): { app: Application; server: Http2Server } => {
    * ===================================================
    * ++++++++++++++++++++++ API ++++++++++++++++++++++++
    * ===================================================
-   * 
+   * smsValidator we check the sms body format first
    */
-  app.post('/sms', (req, res) => {
+  app.post('/sms', smsValidator, (req, res) => {
     const MessagingResponse = twilio.twiml.MessagingResponse;
     const twiml = new MessagingResponse();
 
-    const msgBody = req.body.Body
+    const msgBody = req.body.Body;
     console.log('message received', msgBody);
 
     /**
