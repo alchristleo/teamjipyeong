@@ -8,6 +8,8 @@ import twilio from 'twilio';
 import smsValidator from './middleware/smsValidator';
 import userValidation from './middleware/userValidation';
 import handleConfirmAgreement from './handlers/handleConfirmAgreement';
+const userFileURL = 'db/user.json';
+const transactionFileURL = 'db/transaction.json';
 
 export default (): { app: Application; server: Http2Server } => {
   const app = express();
@@ -38,8 +40,8 @@ export default (): { app: Application; server: Http2Server } => {
    * ===================================================
    * ++++++++++++++++++++++ API ++++++++++++++++++++++++
    * ===================================================
-   * 
-   * 
+   *
+   *
    * calling smsValidator we check the sms body format first
    */
   app.post('/sms', smsValidator, userValidation, (req, res) => {
@@ -48,6 +50,32 @@ export default (): { app: Application; server: Http2Server } => {
 
     const msgBody = req.body.Body;
     console.log('message received', msgBody);
+
+    const parsedMessage = msgBody.split('#');
+    const rawUserData = fs.readFileSync(userFileURL);
+    const parsedUserData = JSON.parse(rawUserData);
+    const phoneNumber = parsedMessage[1];
+    const productCode = parsedMessage[2];
+    const userRequestData = parsedUserData.find((data: any) => data.phone_number === phoneNumber);
+    
+
+    const rawTransactionData = fs.readFileSync(transactionFileURL);
+    const parsedTransactionData = JSON.parse(rawTransactionData);
+
+    const transactionItem = {
+      id: parsedTransactionData.length + 1,
+      product_code: productCode,
+      phone_number: phoneNumber,
+      transaction_date: new Date().toDateString(),
+      user_id: userRequestData.id,
+    };
+
+    const newTransactionData = [...parsedTransactionData, transactionItem];
+
+    const stringifiedTransactionData = JSON.stringify(newTransactionData);
+    fs.writeFile(transactionFileURL, stringifiedTransactionData, err => {
+      if (err) throw err;
+    });
 
     twiml.message('Tokopedia - Isi ulang pulsa kamu BERHASIL untuk SN: 321321321321 senilai 50000');
 
