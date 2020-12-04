@@ -1,7 +1,13 @@
 import getApp from './express';
+import dotenv from 'dotenv';
 
-const port = 3095;
+dotenv.config();
 
+const port = process.env.CFG_PORT;
+
+/**
+ * Init main
+ */
 const main = async (): Promise<void> => {
   const { server } = getApp();
 
@@ -10,6 +16,9 @@ const main = async (): Promise<void> => {
   });
 };
 
+/**
+ * Log exception if occured!
+ */
 main().catch(err => {
   console.log(err);
   process.exit();
