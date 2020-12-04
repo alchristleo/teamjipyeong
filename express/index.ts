@@ -83,9 +83,9 @@ export default (): { app: Application; server: Http2Server } => {
     res.end(twiml.toString());
   });
 
-  app.post('/agreement', async (req, res) => {
+  app.post('/agreement', (req, res) => {
     const reqBody = req.body;
-    res.json(await handleConfirmAgreement(reqBody));
+    res.json(handleConfirmAgreement(reqBody));
   });
 
   const server = http.createServer(app);

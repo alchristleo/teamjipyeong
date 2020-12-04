@@ -1,10 +1,12 @@
+import { json } from 'body-parser';
 import fs from 'fs';
 
 const fileURL = 'db/user.json';
 
-export default async (reqBody: Record<string, string>) => {
-  const { email, phone_number } = reqBody;
-
+export default (reqBody: any) => {
+  const parsedBody = JSON.parse(reqBody);
+  const { email, phone_number } = parsedBody;
+  
   const rawFileData: any = fs.readFileSync(fileURL);
   const parsedUserData = JSON.parse(rawFileData);
 
