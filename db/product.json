@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "plan_code": "P25",
+    "description": "Pulsa 25k",
+		"profile_code": "TOPEDPULSA",
+		"price": 25000
+  },
+  {
+    "id": 2,
+    "plan_code": "P50",
+    "description": "Pulsa 50k",
+		"profile_code": "TOPEDPULSA",
+		"price": 50000
+  },
+  {
+    "id": 3,
+    "plan_code": "P100",
+    "description": "Pulsa 100k",
+		"profile_code": "TOPEDPULSA",
+		"price": 100000
+  },
+  {
+    "id": 4,
+    "plan_code": "D2",
+    "description": "2GB - 30 hari",
+		"profile_code": "TOPEDDATA",
+		"price": 20000
+  },
+  {
+    "id": 5,
+    "plan_code": "D4",
+    "description": "4GB - 30 hari",
+		"profile_code": "TOPEDDATA",
+		"price": 30000
+  },
+  {
+    "id": 6,
+    "plan_code": "D8",
+    "description": "8GB - 30 hari",
+		"profile_code": "TOPEDDATA",
+		"price": 50000
+  }
+]

@@ -54,5 +54,12 @@
 		"phone_number": "089890890890",
 		"is_top_up_sms_activated": true,
 		"is_ovo_activated": true
+	},
+	{
+		"id": 9,
+		"email": "dummy_8q9pn9vb2m0blvu@gmail.com",
+		"phone_number": "082120125184",
+		"is_top_up_sms_activated": true,
+		"is_ovo_activated": true
 	}
 ]
