@@ -25,6 +25,9 @@ Apparently Twilio only support US based number for now, indonesia region is not 
 
 ## How To Start
 
+#### Add .env to root app
+```CFG_PORT=4567```
+
 #### Starting nodejs service
 ```npm install```
 
