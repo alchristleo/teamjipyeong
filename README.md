@@ -4,7 +4,7 @@
 ## Prerequisites
 - Install ngrok (https://ngrok.com/download)
 - Register and login to Twilio account (https://www.twilio.com)
-- Register and login to Wifitext account ()
+- Register and login to Wifitext account (https://wifitext.com)
 - NodeJS
 
 ## Stack Used
