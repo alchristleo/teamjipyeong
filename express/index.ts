@@ -10,6 +10,7 @@ import userValidation from './middleware/userValidation';
 import handleConfirmAgreement from './handlers/handleConfirmAgreement';
 const userFileURL = 'db/user.json';
 const transactionFileURL = 'db/transaction.json';
+const productFileURL = 'db/product.json';
 
 export default (): { app: Application; server: Http2Server } => {
   const app = express();
@@ -52,19 +53,43 @@ export default (): { app: Application; server: Http2Server } => {
     console.log('message received', msgBody);
 
     const parsedMessage = msgBody.split('#');
-    const rawUserData = fs.readFileSync(userFileURL);
+    const rawUserData: any = fs.readFileSync(userFileURL);
     const parsedUserData = JSON.parse(rawUserData);
+    const profileCode = parsedMessage[0];
     const phoneNumber = parsedMessage[1];
-    const productCode = parsedMessage[2];
+    const planCode = parsedMessage[2];
     const userRequestData = parsedUserData.find((data: any) => data.phone_number === phoneNumber);
-    
 
-    const rawTransactionData = fs.readFileSync(transactionFileURL);
+    const rawTransactionData: any = fs.readFileSync(transactionFileURL);
     const parsedTransactionData = JSON.parse(rawTransactionData);
+
+    const rawProductData: any = fs.readFileSync(productFileURL);
+    const parsedProductData = JSON.parse(rawProductData);
+
+    const selectedProductData = parsedProductData.find(
+      (data: any) => data.profile_code === profileCode && data.plan_code === planCode,
+    );
+
+    const remainingOvoBalance = userRequestData.ovo_balance - selectedProductData.price;
+
+    const newUserData = parsedUserData.map((data: any) => {
+      if (data.id === userRequestData.id) {
+        const newBalance = remainingOvoBalance;
+        return {
+          ...data,
+          ovo_balance: newBalance,
+        };
+      }
+      return data;
+    });
+
+    fs.writeFile(userFileURL, JSON.stringify(newUserData), err => {
+      if (err) throw err;
+    });
 
     const transactionItem = {
       id: parsedTransactionData.length + 1,
-      product_code: productCode,
+      product_code: profileCode,
       phone_number: phoneNumber,
       transaction_date: new Date().toDateString(),
       user_id: userRequestData.id,
@@ -72,8 +97,7 @@ export default (): { app: Application; server: Http2Server } => {
 
     const newTransactionData = [...parsedTransactionData, transactionItem];
 
-    const stringifiedTransactionData = JSON.stringify(newTransactionData);
-    fs.writeFile(transactionFileURL, stringifiedTransactionData, err => {
+    fs.writeFile(transactionFileURL, JSON.stringify(newTransactionData), err => {
       if (err) throw err;
     });
 
