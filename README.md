@@ -1,10 +1,12 @@
 # teamjipyeong
-Inbound Message Aggregator Service
+## Inbound Message Aggregator Service
+
+<img height="480px" src="https://github.com/alchristleo/teamjipyeong/blob/master/img/demo.gif">
 
 ## Prerequisites
 - Install ngrok (https://ngrok.com/download)
 - Register and login to Twilio account (https://www.twilio.com)
-- Register and login to Wifitext account ()
+- Register and login to Wifitext account (https://wifitext.com)
 - NodeJS
 
 ## Stack Used
