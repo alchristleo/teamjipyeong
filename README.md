@@ -4,6 +4,7 @@ Inbound Message Aggregator Service
 ## Prerequisites
 - Install ngrok (https://ngrok.com/download)
 - Register and login to Twilio account (https://www.twilio.com)
+- Register and login to Wifitext account ()
 - NodeJS
 
 ## Stack Used
@@ -11,6 +12,9 @@ Inbound Message Aggregator Service
 - Typescript
 - Ruby
 - Vendor: Twilio & wifitext
+
+## Gateway Flow
+
 
 ## How To Start
 
