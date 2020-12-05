@@ -4,6 +4,8 @@ import chalk from 'chalk';
 
 const ALLOWED_PREFIX = ['TOPEDPULSA', 'TOPEDDATA'];
 const ALLOWED_PLAN_CODE = ['P25', 'P50', 'P100', 'D2', 'D4', 'D8'];
+const ALLOWED_PLAN_PULSA = ['P25', 'P50', 'P100'];
+const ALLOWED_PLAN_DATA = ['D2', 'D4', 'D8'];
 
 export default (req: Request, res: Response, next: NextFunction) => {
   const MessagingResponse = twilio.twiml.MessagingResponse;
@@ -35,6 +37,20 @@ export default (req: Request, res: Response, next: NextFunction) => {
   
   if (ALLOWED_PLAN_CODE.indexOf(splitMsg[2]) === -1) {
     twiml.message('Tokopedia - Maaf Nomor Plan yang kamu masukkan salah, format tersedia: P25, P50, P100, D2, D4, D8');
+  
+    res.writeHead(200, {'Content-Type': 'text/xml'});
+    res.end(twiml.toString());
+  }
+
+  if (splitMsg[0] === 'TOPEDPULSA' && ALLOWED_PLAN_PULSA.indexOf(splitMsg[2]) === -1) {
+    twiml.message('Tokopedia - Maaf Nomor Plan yang kamu masukkan salah, format tersedia: P25, P50, P100');
+  
+    res.writeHead(200, {'Content-Type': 'text/xml'});
+    res.end(twiml.toString());
+  }
+
+  if (splitMsg[0] === 'TOPEDDATA' && ALLOWED_PLAN_DATA.indexOf(splitMsg[2]) === -1) {
+    twiml.message('Tokopedia - Maaf Nomor Plan yang kamu masukkan salah, format tersedia: D2, D4, D8');
   
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());

@@ -35,9 +35,9 @@
 		"id": 5,
 		"email": "alchrist@gmail.com",
 		"phone_number": "08123456789",
-		"is_top_up_sms_activated": false,
-		"is_ovo_activated": false,
-		"ovo_balance": 500000
+		"is_top_up_sms_activated": true,
+		"is_ovo_activated": true,
+		"ovo_balance": 400000
 	},
 	{
 		"id": 6,
@@ -67,6 +67,14 @@
 		"id": 9,
 		"email": "dummy_8q9pn9vb2m0blvu@gmail.com",
 		"phone_number": "082120125184",
+		"is_top_up_sms_activated": true,
+		"is_ovo_activated": true,
+		"ovo_balance": 500000
+	},
+	{
+		"id": 10,
+		"email": "dummy_ayxgb1xiljilf6x@gmail.com",
+		"phone_number": "082188297958",
 		"is_top_up_sms_activated": true,
 		"is_ovo_activated": true,
 		"ovo_balance": 500000

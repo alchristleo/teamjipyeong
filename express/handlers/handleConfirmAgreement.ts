@@ -17,6 +17,7 @@ export default (reqBody: any) => {
     phone_number,
     is_top_up_sms_activated: true,
     is_ovo_activated: true,
+    ovo_balance: 500000
   };
 
   const newDataStruct = [...parsedUserData, obj];

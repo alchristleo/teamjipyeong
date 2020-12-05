@@ -63,5 +63,21 @@
 		"transaction_date": "Sat Dec 05 2020",
 		"user_id": 1,
 		"serial_number": 901429168
+	},
+	{
+		"id": 10,
+		"product_code": "TOPEDDATA",
+		"phone_number": "08123456789",
+		"transaction_date": "Sat Dec 05 2020",
+		"user_id": 5,
+		"serial_number": 305389611
+	},
+	{
+		"id": 11,
+		"product_code": "TOPEDPULSA",
+		"phone_number": "08123456789",
+		"transaction_date": "Sat Dec 05 2020",
+		"user_id": 5,
+		"serial_number": 95661927
 	}
 ]
