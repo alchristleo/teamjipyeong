@@ -78,5 +78,29 @@
 		"is_top_up_sms_activated": true,
 		"is_ovo_activated": true,
 		"ovo_balance": 500000
+	},
+	{
+		"id": 11,
+		"email": "dummy_1nlj4yfnyeuviyb@gmail.com",
+		"phone_number": "082105442342",
+		"is_top_up_sms_activated": true,
+		"is_ovo_activated": true,
+		"ovo_balance": 500000
+	},
+	{
+		"id": 12,
+		"email": "dummy_rvr30j4hzyl567d@gmail.com",
+		"phone_number": "087808712145",
+		"is_top_up_sms_activated": true,
+		"is_ovo_activated": true,
+		"ovo_balance": 500000
+	},
+	{
+		"id": 13,
+		"email": "dummy_jjbzf5hwwasjxr6@gmail.com",
+		"phone_number": "081548614019",
+		"is_top_up_sms_activated": true,
+		"is_ovo_activated": true,
+		"ovo_balance": 500000
 	}
 ]
