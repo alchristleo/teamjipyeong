@@ -1,5 +1,5 @@
 # teamjipyeong
-Inbound Message Aggregator Service
+## Inbound Message Aggregator Service
 
 ## Prerequisites
 - Install ngrok (https://ngrok.com/download)
