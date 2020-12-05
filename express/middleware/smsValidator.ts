@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import twilio from 'twilio';
+import chalk from 'chalk';
 
 const ALLOWED_PREFIX = ['TOPEDPULSA', 'TOPEDDATA'];
 const ALLOWED_PLAN_CODE = ['P25', 'P50', 'P100', 'D2', 'D4', 'D8'];
@@ -16,7 +17,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
   
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
-    throw new Error(`sms validator error`);
   }
 
   if (ALLOWED_PREFIX.indexOf(splitMsg[0]) === -1) {
@@ -24,7 +24,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
   
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
-    throw new Error(`sms validator error`);
   }
 
   if (!/^[0-9]*$/.test(splitMsg[1])) {
@@ -32,7 +31,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
   
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
-    throw new Error(`sms validator error`);
   }
   
   if (ALLOWED_PLAN_CODE.indexOf(splitMsg[2]) === -1) {
@@ -40,8 +38,8 @@ export default (req: Request, res: Response, next: NextFunction) => {
   
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
-    throw new Error(`sms validator error`);
   }
   
+  console.log(chalk.red('======SMS Validator success ✅'));
   next();
 };

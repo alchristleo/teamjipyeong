@@ -4,10 +4,12 @@ import express, { Application } from 'express';
 import bodyParser from 'body-parser';
 import { Http2Server } from 'http2';
 import twilio from 'twilio';
+import chalk from 'chalk';
 
 import smsValidator from './middleware/smsValidator';
 import userValidation from './middleware/userValidation';
 import handleConfirmAgreement from './handlers/handleConfirmAgreement';
+
 const userFileURL = 'db/user.json';
 const transactionFileURL = 'db/transaction.json';
 const productFileURL = 'db/product.json';
@@ -44,6 +46,7 @@ export default (): { app: Application; server: Http2Server } => {
    *
    *
    * calling smsValidator we check the sms body format first
+   * calling userValidator middleware
    */
   app.post('/sms', smsValidator, userValidation, (req, res) => {
     const MessagingResponse = twilio.twiml.MessagingResponse;
@@ -82,31 +85,39 @@ export default (): { app: Application; server: Http2Server } => {
       }
       return data;
     });
+    console.log(chalk.red(`======Successfully deduct user ovo balance with id: ${userRequestData.id} ✅`));
 
-    fs.writeFile(userFileURL, JSON.stringify(newUserData), err => {
+    fs.writeFile(userFileURL, JSON.stringify(newUserData, null, '\t'), err => {
       if (err) throw err;
     });
 
+    const generatedSerialNumber = Math.floor(Math.random() * 1000000000);;
     const transactionItem = {
       id: parsedTransactionData.length + 1,
       product_code: profileCode,
       phone_number: phoneNumber,
       transaction_date: new Date().toDateString(),
       user_id: userRequestData.id,
+      serial_number: generatedSerialNumber,
     };
 
     const newTransactionData = [...parsedTransactionData, transactionItem];
+    console.log(chalk.red('======New Transaction successfully created ✅'));
 
-    fs.writeFile(transactionFileURL, JSON.stringify(newTransactionData), err => {
+    fs.writeFile(transactionFileURL, JSON.stringify(newTransactionData, null, '\t'), err => {
       if (err) throw err;
     });
 
-    twiml.message('Tokopedia - Isi ulang pulsa kamu BERHASIL untuk SN: 321321321321 senilai 50000');
+    const profileCodeToText = profileCode === 'TOPEDPULSA' ? 'pulsa' : `paket data ${selectedProductData.description}`;
+    twiml.message(`Tokopedia - Isi ulang ${profileCodeToText} kamu BERHASIL untuk SN: ${generatedSerialNumber} senilai ${selectedProductData.price}`);
 
     res.writeHead(200, { 'Content-Type': 'text/xml' });
     res.end(twiml.toString());
   });
 
+  /**
+   * agreement endpoint to insert new user from frontend.
+   */
   app.post('/agreement', (req, res) => {
     const reqBody = req.body;
     res.json(handleConfirmAgreement(reqBody));

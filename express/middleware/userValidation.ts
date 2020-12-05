@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { Request, Response, NextFunction } from 'express';
 import twilio from 'twilio';
+import chalk from 'chalk';
 
 const userFileURL = 'db/user.json';
 const productFileURL = 'db/product.json';
@@ -40,6 +41,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
      * If any of the conditions above are not achieved, then we will notify the user on the reasons
      */
     if (isUserTopUpSMSActivated && isOvoActivated && isOvoBalanceSufficient) {
+      console.log(chalk.red('======User Validator success ✅'));
       next();
     } else if (!isUserTopUpSMSActivated) {
       twiml.message('Tokopedia - Top up SMS anda belum teraktivasi');
