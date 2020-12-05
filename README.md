@@ -10,6 +10,7 @@ Inbound Message Aggregator Service
 - NodeJS
 - Typescript
 - Ruby
+- Vendor: Twilio & wifitext
 
 ## How To Start
 
